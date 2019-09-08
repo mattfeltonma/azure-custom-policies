@@ -77,7 +77,7 @@
         ]
       },
       "then": {
-        "effect": "deny"
+        "effect": "[parameters('policyEffect')]"
       }
     }
   }
