@@ -13,8 +13,8 @@
             ]
         }
     },
-    "displayName": "Restrict Remote Access From Internet",
-    "description": "This policy enables you to restrict remote access from the Internet to virtual machines over RDP and SSH.  Beware it will not catch the ports if included in a range such as 1-65535",
+    "displayName": "Restrict NSGs That Allow Remote Access From Internet",
+    "description": "This policy enables you to restrict NSGs that allow remote access from the Internet over RDP and SSH.  Beware it will not catch the ports if included in a range such as 1-65535",
     "policyRule": {
       "if": {
         "allOf": [
