@@ -1,0 +1,83 @@
+{
+    "mode": "All",
+    "parameters": {
+        "policyEffect": {
+            "type": "string",
+            "metadata": {
+                "description": "The effect of the policy.",
+                "displayName": "Policy Effect"
+            },
+            "allowedValues": [
+                "Audit",
+                "Deny"
+            ]
+        }
+    },
+    "displayName": "Restrict Remote Access From Internet",
+    "description": "This policy enables you to restrict remote access from the Internet to virtual machines over RDP and SSH",
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.Network/networkSecurityGroups/securityRules"
+          },
+          {
+            "allOf": [
+              {
+                "field": "Microsoft.Network/networkSecurityGroups/securityRules/access",
+                "equals": "Allow"
+              },
+              {
+                "field": "Microsoft.Network/networkSecurityGroups/securityRules/direction",
+                "equals": "Inbound"
+              },
+              {
+                "anyOf": [
+                  {
+                    "field": "Microsoft.Network/networkSecurityGroups/securityRules/destinationPortRange",
+                    "in": [
+                      "3389",
+                      "22"
+                    ]
+                  },
+                  {
+                    "not": {
+                      "field": "Microsoft.Network/networkSecurityGroups/securityRules/destinationPortRanges[*]",
+                      "notIn": [
+                        "3389",
+                        "22"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "anyOf": [
+                  {
+                    "field": "Microsoft.Network/networkSecurityGroups/securityRules/sourceAddressPrefix",
+                    "in": [
+                      "*",
+                      "Internet"
+                    ]
+                  },
+                  {
+                    "not": {
+                      "field": "Microsoft.Network/networkSecurityGroups/securityRules/sourceAddressPrefixes[*]",
+                      "notIn": [
+                        "*",
+                        "Internet"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "then": {
+        "effect": "deny"
+      }
+    }
+  }
