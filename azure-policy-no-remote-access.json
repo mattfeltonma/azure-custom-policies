@@ -14,7 +14,7 @@
         }
     },
     "displayName": "Restrict Remote Access From Internet",
-    "description": "This policy enables you to restrict remote access from the Internet to virtual machines over RDP and SSH",
+    "description": "This policy enables you to restrict remote access from the Internet to virtual machines over RDP and SSH.  Beware it will not catch the ports if included in a range such as 1-65535",
     "policyRule": {
       "if": {
         "allOf": [
