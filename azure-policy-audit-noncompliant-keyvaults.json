@@ -1,0 +1,25 @@
+{
+  "mode": "All",
+  "parameters": {},
+  "displayName": "Audit for Key Vaults with non-expiring keys or secrets",
+  "description": "This policy must be used in conjuction with the AuditKeyVaultNonExpiring Azure Function.  It will audit for Key Vaults that do not have a Compliant tag set to True",
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "Type",
+          "equals": "Microsoft.KeyVault/vaults"
+        },
+        {
+            "not": {
+                "field": "tags['Compliant']",
+                "equals": "True"
+            }
+        }
+      ]
+    },
+    "then": {
+      "effect": "audit"
+    }
+  }
+}
