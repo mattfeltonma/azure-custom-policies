@@ -13,10 +13,8 @@
                             "equals": "Microsoft.Compute/virtualMachines"
                         },
                         {
-                            "not": {
-                                "field": "Microsoft.Compute/virtualMachines/securityProfile.encryptionAtHost",
-                                "exists": true
-                            }
+                            "field": "Microsoft.Compute/virtualMachines/securityProfile.encryptionAtHost",
+                            "exists": false
                         }
                     ]
                 },
@@ -27,10 +25,8 @@
                             "equals": "Microsoft.Compute/virtualMachineScaleSets"
                         },
                         {
-                            "not": {
-                                "field": "Microsoft.Compute/virtualMachineScaleSets/virtualMachineProfile.securityProfile.encryptionAtHost",
-                                "exists": true
-                            }
+                            "field": "Microsoft.Compute/virtualMachineScaleSets/virtualMachineProfile.securityProfile.encryptionAtHost",
+                            "exists": false
                         }
                     ]
                 }
