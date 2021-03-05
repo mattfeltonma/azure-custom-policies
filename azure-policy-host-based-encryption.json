@@ -14,7 +14,7 @@
                         },
                         {
                             "not": {
-                                "field": "Micro∏soft.Compute/virtualMachines/securityProfile.encryptionAtHost",
+                                "field": "Microsoft.Compute/virtualMachines/securityProfile.encryptionAtHost",
                                 "exists": true
                             }
                         }
