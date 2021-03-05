@@ -1,0 +1,13 @@
+{
+    "if": {
+        "allOf": [
+            {
+                "field": "Microsoft.Web/sites/config/siteAuthEnabled",
+                "equals": "false"
+            }
+        ]
+    },
+    "then": {
+        "effect": "[parameters('policyEffect')]"
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "policyEffect": {
+        "type": "string",
+        "metadata": {
+            "description": "The effect of the policy.",
+            "displayName": "Policy Effect"
+        },
+        "allowedValues": [
+            "Audit",
+            "Deny"
+        ]
+    }
+}

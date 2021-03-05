@@ -1,0 +1,19 @@
+{
+    "if": {
+        "allOf": [
+            {
+                "field": "Type",
+                "equals": "Microsoft.KeyVault/vaults"
+            },
+            {
+                "not": {
+                    "field": "tags['Compliant']",
+                    "equals": "True"
+                }
+            }
+        ]
+    },
+    "then": {
+        "effect": "audit"
+    }
+}

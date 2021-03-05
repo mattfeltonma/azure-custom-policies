@@ -1,0 +1,21 @@
+{
+    "policyEffect": {
+        "type": "String",
+        "metadata": {
+            "description": "The effect of the policy.",
+            "displayName": "Policy Effect"
+        },
+        "allowedValues": [
+            "Audit",
+            "Deny"
+        ]
+    },
+    "allowedLocations": {
+        "type": "Array",
+        "metadata": {
+            "description": "This list of of allowed locations",
+            "displayName": "Allowed locations",
+            "strongType": "location"
+        }
+    }
+}
