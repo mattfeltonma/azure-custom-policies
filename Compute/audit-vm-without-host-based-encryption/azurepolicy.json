@@ -1,5 +1,5 @@
 {
-    "mode": "Indexed",
+    "mode": "Full",
     "parameters": {},
     "displayName": "Audit - Azure Virtual Machines should have encryption at host enabled",
     "description": "Ensure end-to-end encryption of a Virtual Machines Managed Disks with encryption at host: https://docs.microsoft.com/en-us/azure/virtual-machines/disk-encryption#encryption-at-host---end-to-end-encryption-for-your-vm-data",
