@@ -34,7 +34,7 @@
                     "allOf": [
                         {
                             "field": "type",
-                            "equals": "Microsoft.Compute/virtualMachineScaleSets"
+                            "equals": "Microsoft.Compute/virtualMachineScaleSets/virtualMachines"
                         },
                         {
                             "field": "Microsoft.Compute/virtualMachineScaleSets/virtualmachines/securityProfile.encryptionAtHost",
