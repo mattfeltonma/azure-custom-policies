@@ -28,6 +28,18 @@
                         }
                     }
                 ]
+            },
+            {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Compute/virtualMachineScaleSets"
+                    },
+                    {
+                        "field": "Microsoft.Compute/virtualMachineScaleSets/virtualmachines/securityProfile.encryptionAtHost",
+                        "exists": false
+                    }
+                ]
             }
         ]
     },
