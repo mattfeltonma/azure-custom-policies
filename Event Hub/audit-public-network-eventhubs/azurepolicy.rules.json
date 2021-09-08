@@ -1,0 +1,27 @@
+{
+    "if": {
+        "allOf": [
+            {
+                "field": "type",
+                "equals": "Microsoft.EventHub/namespaces/networkRuleSets"
+            },
+            {
+                "anyOf": [
+                    {
+                        "field": "Microsoft.EventHub/namespaces/networkRuleSets/default.defaultAction",
+                        "equals": "Allow"
+                    },
+                    {
+                        "count": {
+                            "field": "Microsoft.EventHub/namespaces/networkRuleSets/default.ipRules[*]"
+                        },
+                        "equals": 0
+                    }
+                ]
+            }
+        ]
+    },
+    "then": {
+        "effect": "audit"
+    }
+}
