@@ -1,0 +1,50 @@
+{
+    "mode": "All",
+    "parameters": {},
+    "displayName": "Audit - Azure Arc Servers should not allow extensions",
+    "description": "This policy audits Azure Arc Servers to see if it allows extensions",
+    "policyRule": {
+        "mode": "All",
+        "policyRule": {
+            "if": {
+                "anyOf": [
+                    {
+                        "allOf": [
+                            {
+                                "field": "type",
+                                "equals": "Microsoft.HybridCompute/machines"
+                            },
+                            {
+                                "count": {
+                                    "field": "Microsoft.HybridCompute/machines/agentConfiguration.extensionsAllowList[*]"
+                                },
+                                "notEquals": 1
+                            }
+                        ]
+                    },
+                    {
+                        "not": {
+                            "allOf": [
+                                {
+                                    "field": "Microsoft.HybridCompute/machines/agentConfiguration.extensionsAllowList[*].publisher",
+                                    "in": [
+                                        "Allow"
+                                    ]
+                                },
+                                {
+                                    "field": "Microsoft.HybridCompute/machines/agentConfiguration.extensionsAllowList[*].type",
+                                    "in": [
+                                        "None"
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "then": {
+                "effect": "Audit"
+            }
+        }
+    }
+}

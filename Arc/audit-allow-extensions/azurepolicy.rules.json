@@ -1,0 +1,44 @@
+{
+    "mode": "All",
+    "policyRule": {
+        "if": {
+            "anyOf": [
+                {
+                    "allOf": [
+                        {
+                            "field": "type",
+                            "equals": "Microsoft.HybridCompute/machines"
+                        },
+                        {
+                            "count": {
+                                "field": "Microsoft.HybridCompute/machines/agentConfiguration.extensionsAllowList[*]"
+                            },
+                            "notEquals": 1
+                        }
+                    ]
+                },
+                {
+                    "not": {
+                        "allOf": [
+                            {
+                                "field": "Microsoft.HybridCompute/machines/agentConfiguration.extensionsAllowList[*].publisher",
+                                "in": [
+                                    "Allow"
+                                ]
+                            },
+                            {
+                                "field": "Microsoft.HybridCompute/machines/agentConfiguration.extensionsAllowList[*].type",
+                                "in": [
+                                    "None"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "then": {
+            "effect": "Audit"
+        }
+    }
+}
