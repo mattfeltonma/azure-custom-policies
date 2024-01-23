@@ -4,7 +4,7 @@
     "displayName": "Audit - Azure Arc Servers should not allow extensions",
     "description": "This policy audits Azure Arc Servers to see if it allows extensions",
     "policyRule": {
-        "mode": "All",
+        "mode": "Indexed",
         "policyRule": {
             "if": {
                 "anyOf": [
@@ -43,7 +43,7 @@
                 ]
             },
             "then": {
-                "effect": "Audit"
+                "effect": "audit"
             }
         }
     }

@@ -1,0 +1,24 @@
+{
+    "if": {
+        "allOf": [
+            {
+                "field": "type",
+                "equals": "Microsoft.Network/virtualNetworks"
+            },
+            {
+                "allOf": [
+                    {
+                        "field": "tags['[parameters('tagKey')]']",
+                        "in": "[parameters('tagValue')]"
+                    }
+                ]
+            }
+        ]
+    },
+    "then": {
+        "effect": "addToNetworkGroup",
+        "details": {
+            "networkGroupId":  "/subscriptions/55555555-5555-5555-5555-555555555555/resourceGroups/myresourcegroup/providers/Microsoft.Network/networkManagers/myavnm/networkGroups/mynetworkgroup"
+        }
+    }
+}

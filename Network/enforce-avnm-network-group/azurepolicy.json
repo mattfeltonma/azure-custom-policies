@@ -1,0 +1,45 @@
+{
+    "mode": "Microsoft.Network.Data",
+    "displayName": "Enforce - VNets with specific tag should be added to an AVNM network group",
+    "description": "This policy adds virtual networks with a specific tag to an Azure Virtual Network Manager network group",
+    "parameters": {
+        "tagKey": {
+            "type": "String",
+            "metadata": {
+                "description": "This is the name of the tag that will be used to determine if the virtual network should be added to the network group",
+                "displayName": "Tag name"
+            }
+        },
+        "tagValue": {
+            "type": "String",
+            "metadata": {
+                "description": "This is the value of the tag that will be used to determine if the virtual network should be added to the network group",
+                "displayName": "Tag value"
+            }
+        }
+    },
+    "policyRule": {
+        "if": {
+            "allOf": [
+                {
+                    "field": "type",
+                    "equals": "Microsoft.Network/virtualNetworks"
+                },
+                {
+                    "allOf": [
+                        {
+                            "field": "tags['[parameters('tagKey')]']",
+                            "in": "[parameters('tagValue')]"
+                        }
+                    ]
+                }
+            ]
+        },
+        "then": {
+            "effect": "addToNetworkGroup",
+            "details": {
+                "networkGroupId":  "/subscriptions/55555555-5555-5555-5555-555555555555/resourceGroups/myresourcegroup/providers/Microsoft.Network/networkManagers/myavnm/networkGroups/mynetworkgroup"
+            }
+        }
+    }
+}

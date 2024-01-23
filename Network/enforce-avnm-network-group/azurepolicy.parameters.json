@@ -1,0 +1,16 @@
+{
+    "tagKey": {
+        "type": "String",
+        "metadata": {
+            "description": "This is the name of the tag that will be used to determine if the virtual network should be added to the network group",
+            "displayName": "Tag name"
+        }
+    },
+    "tagValue": {
+        "type": "String",
+        "metadata": {
+            "description": "This is the value of the tag that will be used to determine if the virtual network should be added to the network group",
+            "displayName": "Tag value"
+        }
+    }
+}
