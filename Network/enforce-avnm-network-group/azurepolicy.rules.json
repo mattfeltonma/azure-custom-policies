@@ -8,7 +8,7 @@
             {
                 "allOf": [
                     {
-                        "field": "tags['[parameters('tagKey')]']",
+                        "field": "[concat('tags[', parameters('tagKey'), ']')]",
                         "in": "[parameters('tagValue')]"
                     }
                 ]
