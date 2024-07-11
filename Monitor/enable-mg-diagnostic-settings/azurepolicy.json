@@ -1,0 +1,178 @@
+{
+    "mode": "All",
+    "displayName": "NOT SUPPORTED - Enable diagnostic settings for Management Groups",
+    "description": "Note that this policy is not yet supported by Azure Policy. This policy enabled diagnostic settings for Management Groups.",
+    "parameters": {
+        "effect": {
+            "type": "String",
+            "metadata": {
+                "displayName": "Effect",
+                "description": "Enable or disable the execution of the policy"
+            },
+            "allowedValues": [
+                "AuditIfNotExists",
+                "DeployIfNotExists",
+                "Disabled"
+            ],
+            "defaultValue": "DeployIfNotExists"
+        },
+        "diagnosticSettingName": {
+            "type": "String",
+            "metadata": {
+                "displayName": "Diagnostic Setting Name",
+                "description": "The name of the diagnostic setting."
+            },
+            "defaultValue": "setByPolicy"
+        },
+        "categoryGroup": {
+            "type": "String",
+            "metadata": {
+                "displayName": "Category Group",
+                "description": "The diagnostic category group to enable. This can be audit or allLogs"
+            },
+            "allowedValues": [
+                "audit",
+                "allLogs"
+            ],
+            "defaultValue": "audit"
+        },
+        "logAnalytics": {
+            "type": "String",
+            "metadata": {
+                "displayName": "Log Analytics Workspace",
+                "description": "Log Analytics Workspace",
+                "assignPermissions": true
+            }
+        }
+    },
+    "policyRule": {
+        "if": {
+            "allOf": [
+                {
+                    "field": "type",
+                    "equals": "microsoft.management/managementgroups"
+                }
+            ]
+        },
+        "then": {
+            "effect": "[parameters('effect')]",
+            "details": {
+                "type": "Microsoft.Insights/diagnosticSettings",
+                "evaluationDelay": "AfterProvisioning",
+                "existenceCondition": {
+                    "allOf": [
+                        {
+                            "count": {
+                                "field": "Microsoft.Insights/diagnosticSettings/logs[*]",
+                                "where": {
+                                    "allOf": [
+                                        {
+                                            "field": "Microsoft.Insights/diagnosticSettings/logs[*].enabled",
+                                            "equals": "[equals(parameters('categoryGroup'), 'audit')]"
+                                        },
+                                        {
+                                            "field": "microsoft.insights/diagnosticSettings/logs[*].categoryGroup",
+                                            "equals": "audit"
+                                        }
+                                    ]
+                                }
+                            },
+                            "equals": 1
+                        },
+                        {
+                            "count": {
+                                "field": "Microsoft.Insights/diagnosticSettings/logs[*]",
+                                "where": {
+                                    "allOf": [
+                                        {
+                                            "field": "Microsoft.Insights/diagnosticSettings/logs[*].enabled",
+                                            "equals": "[equals(parameters('categoryGroup'), 'allLogs')]"
+                                        },
+                                        {
+                                            "field": "microsoft.insights/diagnosticSettings/logs[*].categoryGroup",
+                                            "equals": "allLogs"
+                                        }
+                                    ]
+                                }
+                            },
+                            "equals": 1
+                        },
+                        {
+                            "field": "Microsoft.Insights/diagnosticSettings/workspaceId",
+                            "equals": "[parameters('logAnalytics')]"
+                        }
+                    ]
+                },
+                "roleDefinitionIds": [
+                    "/providers/Microsoft.Authorization/roleDefinitions/92aaf0da-9dab-42b6-94a3-d43ce8d16293"
+                ],
+                "deployment": {
+                    "properties": {
+                        "mode": "incremental",
+                        "template": {
+                            "$schema": "http://schema.management.azure.com/schemas/2019-08-01/deploymentTemplate.json#",
+                            "contentVersion": "1.0.0.0",
+                            "parameters": {
+                                "diagnosticSettingName": {
+                                    "type": "string"
+                                },
+                                "logAnalytics": {
+                                    "type": "string"
+                                },
+                                "categoryGroup": {
+                                    "type": "String"
+                                },
+                                "resourceName": {
+                                    "type": "string"
+                                }
+                            },
+                            "variables": {},
+                            "resources": [
+                                {
+                                    "type": "microsoft.management/managementGroups/providers/diagnosticSettings",
+                                    "apiVersion": "2020-01-01-preview",
+                                    "name": "[concat(parameters('resourceName'), '/', 'microsoft.insights/', parameters('diagnosticSettingName'))]",
+                                    "location": "[parameters('resourceLocation')]",
+                                    "properties": {
+                                        "workspaceId": "[parameters('logAnalytics')]",
+                                        "logs": [
+                                            {
+                                                "categoryGroup": "audit",
+                                                "enabled": "[equals(parameters('categoryGroup'), 'audit')]"
+                                            },
+                                            {
+                                                "categoryGroup": "allLogs",
+                                                "enabled": "[equals(parameters('categoryGroup'), 'allLogs')]"
+                                            }
+                                        ],
+                                        "metrics": []
+                                    }
+                                }
+                            ],
+                            "outputs": {
+                                "policy": {
+                                    "type": "string",
+                                    "value": "[concat('Diagnostic setting ', parameters('diagnosticSettingName'), ' for type Management Groups (microsoft.management/managementGroups), resourceName ', parameters('resourceName'), ' to Log Analytics Workspace ', parameters('logAnalytics'), ' configured')]"
+                                }
+                            }
+                        },
+                        "parameters": {
+                            "diagnosticSettingName": {
+                                "value": "[parameters('diagnosticSettingName')]"
+                            },
+                            "categoryGroup": {
+                                "value": "[parameters('categoryGroup')]"
+                            },
+                            "logAnalytics": {
+                                "type": "string"
+                            },
+                            "resourceName": {
+                                "value": "[field('name')]"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

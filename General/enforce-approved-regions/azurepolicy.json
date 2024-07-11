@@ -1,5 +1,7 @@
 {
     "mode": "All",
+    "displayName": "Enforce approved regions for deployment of Azure resoruces",
+    "description": "This policy enforces the use of approved regions for deployment of Azure resources.",
     "parameters": {
         "policyEffect": {
             "type": "String",
